@@ -1,0 +1,13 @@
+services:
+  app:
+    working_dir: /app
+    volumes:
+      - ./:/app
+    image: satisfactory-item-transit-dev
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:8080

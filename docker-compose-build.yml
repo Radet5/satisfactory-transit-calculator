@@ -1,0 +1,11 @@
+services:
+  app-build:
+    working_dir: /app
+    volumes:
+      - ./:/app
+    image: satisfactory-item-transit-build
+    build:
+      context: ./
+      dockerfile: ./DockerfileBuild
+    environment:
+      NODE_ENV: production

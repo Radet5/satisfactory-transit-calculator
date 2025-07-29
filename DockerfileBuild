@@ -1,0 +1,5 @@
+FROM node:24-alpine
+
+RUN yarn install
+
+CMD [ "yarn", "build" ]
