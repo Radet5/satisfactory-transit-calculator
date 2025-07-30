@@ -32,7 +32,7 @@ export const RecipeTable = ({ recipes=[], selectedItemId="", onRowClick }: IReci
       const curSelectedItemId = selectedItemIds[i];
       const ratio = calcRatio(recipe, items, curSelectedItemId);
 
-      return <tr onClick={(e) => onRowClick(e, recipe)}>
+      return <tr onClick={(e) => onRowClick(e, recipe)} key={recipe.id}>
         <td>{recipe.name}</td>
         <td><InOutTable items={recipe.in} time={recipe.time} selected={curSelectedItemId} onRowClick={(id) => onClickSelectItem(id, i)} /></td>
         <td><InOutTable items={recipe.out} time={recipe.time} /></td>
@@ -45,7 +45,7 @@ export const RecipeTable = ({ recipes=[], selectedItemId="", onRowClick }: IReci
   return (
     <table>
       <thead>
-        <tr className="table-title"><th>{selectedItem?.name} Recipes</th></tr>
+        <tr className="table-title"><th colSpan={5}>{selectedItem?.name} Recipes</th></tr>
         <tr>
           <th>Name</th>
           <th>In (per m)</th>

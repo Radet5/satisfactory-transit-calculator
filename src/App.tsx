@@ -1,10 +1,12 @@
 import './App.css'
+import "./assets/fonts/Satisfontory_v1.5.otf";
 import { useState, type MouseEvent } from 'react';
 import { DataRetrival } from './components/data-retrival';
 import type { Item, ItemIds, Items, Recipes } from './types';
 import { ItemTable } from './components/item-table';
 import { RecipeTable } from './components/recipe-table';
 import { useDataContext } from './context/data-context';
+import logo from "./assets/stc-rect-logo.png";
 
 
 const filterFunction = (recipes: Recipes|undefined, key: string) => {
@@ -33,16 +35,13 @@ function App() {
   const [recipeItemId, setRecipeItemId] = useState<Item["id"]>();
   const { data } = useDataContext();
 
-  console.log({data});
+  // console.log({data});
 
   const onRowClick = (_: MouseEvent<HTMLTableRowElement>, item: Item, override=false) => {
     // data?.recipes.forEach(recipe => console.log(Object.keys(recipe.in)))
     const pees = filterFunction(data?.recipes, item.id);
     const outputIds = getOutputItems(pees);
     const outputs = getItemsByIdList(data?.items, outputIds);
-    console.log(pees);
-    console.log(outputIds);
-    console.log(outputs);
     if (!override && tableData) setTableData([ ...tableData, outputs]);
     else setTableData([outputs]);
   }
@@ -57,20 +56,24 @@ function App() {
   
   return (
     <>
-      <div>Satisfactory Version: {data?.version.Satisfactory}</div>
-      <DataRetrival/>
-      <div className='table-container'>
-        <div className='scroll-container'>
-          <ItemTable items={data?.items} onRowClick={selectRecipe} />
-        </div>
-        <div className='scroll-container'>
-          <RecipeTable recipes={recipeData} selectedItemId={recipeItemId} onRowClick={() => null} />
-          <div className='table-container table-container-inner'>
-            {otherTables}
+      <img src={logo} />
+      <div className='title'>Satisfactory Transit Calculator</div>
+      {data ? <>
+        <div className='version'>Satisfactory Data Version: {data?.version.Satisfactory}</div>
+        <div className='table-container'>
+          <div className='scroll-container'>
+            <ItemTable items={data?.items} onRowClick={selectRecipe} />
+          </div>
+          <div className='scroll-container'>
+            <RecipeTable recipes={recipeData} selectedItemId={recipeItemId} onRowClick={() => null} />
+            <div className='table-container table-container-inner'>
+              {otherTables}
+            </div>
           </div>
         </div>
-      </div>
-    </>
+       </>: <></>}
+        <div><DataRetrival/></div>
+     </>
   )
 }
 

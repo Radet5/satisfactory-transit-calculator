@@ -9,7 +9,7 @@ interface IItemTable {
 export const ItemTable = ({ items=[], onRowClick }: IItemTable) => {
   
   const tableBody = items.filter((item) => item.category === 'parts' || item.category === 'components').map((item) =>
-    <tr onClick={(e) => onRowClick(e, item)}>
+    <tr onClick={(e) => onRowClick(e, item)} key={item.id}>
       <td>{item.name}</td><td>{item.stack}</td><td>{item.category}</td>
     </tr>
   );

@@ -95,6 +95,19 @@ tbody tr:hover {
     color: #747bff;
   }
 
+  tbody tr:nth-child(odd) {
+    background: #949494;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #d4d4d4;
+  }
+
+  tbody tr:hover {
+    background: #5f668c;
+    /* color: #fa9549; */
+  }
+
   button {
     background-color: #f9f9f9;
   }

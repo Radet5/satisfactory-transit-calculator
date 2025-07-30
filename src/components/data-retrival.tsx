@@ -4,7 +4,7 @@ import { useDataContext } from "../context/data-context";
 
 const dataCookieName = 'localSatisfactoryData';
 export const DataRetrival = () => {
-  const { setData } = useDataContext();
+  const { data, setData } = useDataContext();
   
   useEffect(() => {
     const localData = localStorage.getItem(dataCookieName);
@@ -29,6 +29,6 @@ export const DataRetrival = () => {
       .catch((err) => console.error(err));
   }
 
-  return <button onClick={getData}>Get data</button>
+  return <button onClick={getData}>{data ? "Refresh Data" : "Get Data"}</button>
 };
 

@@ -19,7 +19,7 @@ export const InOutTable = ({items, time, selected, onRowClick}: IInOutTable) => 
     const itemName = data?.items.find(item => item.id === key)?.name;
     const rowClass = selected && selected === key ? "selected" : undefined;
     const perMinute = (items[key] * 60) / time;
-    return <tr onClick={()=>onClick(key)} className={rowClass}>
+    return <tr onClick={()=>onClick(key)} className={rowClass} key={key}>
       <td>{itemName}</td>
       <td>{perMinute}</td>
     </tr>;
