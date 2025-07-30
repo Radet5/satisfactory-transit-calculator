@@ -95,6 +95,7 @@ footer {
   background: #343434;
   flex-grow: 0;
   font-size: 0.75em;
+  font-weight: 600;
 }
 
 @media (prefers-color-scheme: light) {
@@ -122,5 +123,9 @@ footer {
 
   button {
     background-color: #f9f9f9;
+  }
+
+  footer {
+    background: #d4d4d4;
   }
 }
