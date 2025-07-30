@@ -16,11 +16,11 @@
   /* font-weight: 600; */
   font-size: 1.5em;
   font-family: "Satisfontory";
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 }
 
 .version {
-  padding: 0.5rem 0 1rem;
+  padding: 0.5rem 0;
   font-size: 0.75em;
   font-style: italic;
 }
@@ -46,6 +46,7 @@
 }
 
 .table-container {
+  padding: 0.5rem;
   display: flex;
   align-items: flex-start;
   gap: 1rem;
@@ -69,6 +70,10 @@
 
 tr.selected {
   color: #fa9549;
+}
+
+.button-container {
+  padding: 0.5rem;
 }
 
 @media (prefers-color-scheme: light) {

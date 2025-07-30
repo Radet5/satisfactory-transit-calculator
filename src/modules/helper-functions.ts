@@ -1,5 +1,11 @@
-import type { Recipe, Item, Items } from "../types";
+import type { Recipe, Recipes, Item, Items } from "../types";
 import { DecimalPrecision } from "./math"; 
+
+
+export const recipeFilterFunction = (recipes: Recipes|undefined, key: string) => {
+  if (!recipes) return [];
+  return recipes.filter(recipe => Object.keys(recipe.in).includes(key));
+}
 
 export const calcRatio = (recipe: Recipe, items: Items, curSelectedItemId: Item["id"]) => {
       const selectedItemDetails = items.find((item) => item.id === curSelectedItemId);

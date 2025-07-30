@@ -2,58 +2,24 @@ import './App.css'
 import "./assets/fonts/Satisfontory_v1.5.otf";
 import { useState, type MouseEvent } from 'react';
 import { DataRetrival } from './components/data-retrival';
-import type { Item, ItemIds, Items, Recipes } from './types';
+import type { Item, Recipes } from './types';
 import { ItemTable } from './components/item-table';
 import { RecipeTable } from './components/recipe-table';
+import { recipeFilterFunction } from './modules/helper-functions';
 import { useDataContext } from './context/data-context';
 import logo from "./assets/stc-rect-logo.png";
 
-
-const filterFunction = (recipes: Recipes|undefined, key: string) => {
-  if (!recipes) return [];
-  return recipes.filter(recipe => Object.keys(recipe.in).includes(key));
-}
-
-const getOutputItems = (recipes: Recipes) => {
-  return [...new Set(recipes.flatMap(recipe => Object.keys(recipe.out)))];
-}
-
-const getItemsByIdList = (items: Items|undefined, ids: ItemIds) => {
-  if (!items) return [];
-  const result: Items = [];
-  ids.forEach(id => {
-    const foundItem = items.find(item => item.id === id);
-    if (foundItem) result.push(foundItem);
-  });
-
-  return result;
-}
-
 function App() {
-  const [tableData, setTableData] = useState<Array<Items>>();
   const [recipeData, setRecipeData] = useState<Recipes>();
   const [recipeItemId, setRecipeItemId] = useState<Item["id"]>();
   const { data } = useDataContext();
 
-  // console.log({data});
-
-  const onRowClick = (_: MouseEvent<HTMLTableRowElement>, item: Item, override=false) => {
-    // data?.recipes.forEach(recipe => console.log(Object.keys(recipe.in)))
-    const pees = filterFunction(data?.recipes, item.id);
-    const outputIds = getOutputItems(pees);
-    const outputs = getItemsByIdList(data?.items, outputIds);
-    if (!override && tableData) setTableData([ ...tableData, outputs]);
-    else setTableData([outputs]);
-  }
-
   const selectRecipe = (_: MouseEvent<HTMLTableRowElement>, item: Item) => {
-    const pees = filterFunction(data?.recipes, item.id);
-    setRecipeData(pees);
+    const recipes = recipeFilterFunction(data?.recipes, item.id);
+    setRecipeData(recipes);
     setRecipeItemId(item.id);
   }
 
-  const otherTables = tableData?.map(tabData => <ItemTable items={tabData} onRowClick={onRowClick}/>)
-  
   return (
     <>
       <img src={logo} />
@@ -65,14 +31,17 @@ function App() {
             <ItemTable items={data?.items} onRowClick={selectRecipe} />
           </div>
           <div className='scroll-container'>
-            <RecipeTable recipes={recipeData} selectedItemId={recipeItemId} onRowClick={() => null} />
-            <div className='table-container table-container-inner'>
-              {otherTables}
-            </div>
+            {recipeData
+              ? <RecipeTable
+                  recipes={recipeData}
+                  selectedItemId={recipeItemId}
+                  onRowClick={() => null}
+                />
+              : <h3>Select an item to see recipes that use it</h3>}
           </div>
         </div>
        </>: <></>}
-        <div><DataRetrival/></div>
+        <div className='button-container'><DataRetrival/></div>
      </>
   )
 }
