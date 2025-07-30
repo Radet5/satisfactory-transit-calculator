@@ -94,6 +94,7 @@ footer {
   align-items: center;
   background: #343434;
   flex-grow: 0;
+  font-size: 0.75em;
 }
 
 @media (prefers-color-scheme: light) {
