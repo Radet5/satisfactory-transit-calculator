@@ -7,6 +7,10 @@
   flex-grow: 1;
 }
 
+#root img {
+  max-width: 90vw;
+}
+
 @font-face {
   font-family: "Satisfontory";
   src: url("./assets/fonts/Satisfontory_v1.5.otf") format("opentype");
@@ -50,6 +54,7 @@
 .table-container {
   padding: 0.5rem;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
 }
@@ -68,6 +73,7 @@
 .scroll-container {
   overflow-y: auto;
   height: 85vh;
+  width: 100%;
 }
 
 tr.selected {
@@ -92,5 +98,15 @@ tr.selected {
 
   tr.selected td {
     background: #fa9549;
+  }
+}
+
+@media (min-width: 62em) {
+  .scroll-container {
+    width: unset;
+  }
+
+  .table-container {
+    flex-direction: row;
   }
 }

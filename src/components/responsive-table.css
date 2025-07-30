@@ -1,0 +1,166 @@
+.table-container {
+  margin: 5% 3%;
+}
+
+.responsive-table {
+  width: 100%;
+  margin-bottom: 1.5em;
+  border-spacing: 0;
+}
+
+.responsive-table thead {
+  /* Accessibly hide <thead> on narrow viewports */
+  position: absolute;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+
+.responsive-table thead th {
+  font-weight: normal;
+  text-align: left;
+}
+
+.responsive-table thead th:first-of-type {
+  text-align: left;
+}
+
+/* Set these items to display: block for narrow viewports */
+.responsive-table>tbody,
+.responsive-table>tbody>tr,
+.responsive-table>thead>th,
+.responsive-table>tbody>tr>td {
+  display: block;
+  white-space: normal;
+}
+
+
+.responsive-table th,
+.responsive-table td {
+  vertical-align: middle;
+}
+
+.responsive-table caption {
+  margin-bottom: 1em;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+
+}
+
+.responsive-table tfoot {
+  font-size: .8em;
+  font-style: italic;
+
+}
+
+.responsive-table>tbody>tr {
+  margin-bottom: 1em;
+}
+
+.responsive-table tbody tr:last-of-type {
+  margin-bottom: 0;
+}
+
+.responsive-table tbody td {
+  text-align: right;
+}
+
+.responsive-table tbody td[data-type=currency] {
+  text-align: right;
+}
+
+.responsive-table tbody td[data-title]:before {
+  content: attr(data-title);
+  font-weight: 600;
+  float: left;
+  font-size: .8em;
+  /* color: #5f668c; */
+}
+
+@media(min-width: 30em) {
+
+  .responsive-table tbody td[data-title]:before {
+    font-size: .9em;
+  }
+}
+
+@media (min-width: 48em) {
+  .responsive-table {
+    font-size: .9em;
+  }
+
+  .responsive-table thead {
+    /* Unhide <thead> on wide viewports */
+    position: relative;
+    clip: auto;
+    height: auto;
+    width: auto;
+    overflow: auto;
+  }
+
+  .table-container {
+    margin: 2%;
+  }
+
+  .responsive-table>tr {
+    /* Undo display: block */
+    display: table-row;
+  }
+
+  .responsive-table>thead>th,
+  .responsive-table>tbody>tr>td {
+    /* Undo display: block */
+    display: table-cell;
+  }
+
+  .responsive-table caption {
+    font-size: 1.5em;
+  }
+
+  .responsive-table>tbody {
+    /* // Undo display: block */
+    display: table-row-group;
+  }
+
+  .responsive-table>tbody>tr {
+    /* // Undo display: block */
+    display: table-row;
+  }
+
+  .responsive-table tbody th[scope="row"] {
+    background-color: transparent;
+    text-align: left;
+  }
+
+  .responsive-table tbody td {
+    text-align: left;
+  }
+
+  .responsive-table tbody td[data-title]:before {
+    /* // Don’t show data-title labels */
+    content: none;
+  }
+}
+
+@media (min-width: 62em) {
+  .responsive-table {
+    font-size: 1em;
+  }
+
+  .responsive-table tfoot {
+    font-size: .9em;
+  }
+}
+
+@media (min-width: 75em) {
+  .table-container {
+    margin: 0 auto;
+    /* max-width: var(--bp-widest)); */
+  }
+}
