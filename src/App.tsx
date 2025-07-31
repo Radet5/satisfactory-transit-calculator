@@ -12,7 +12,7 @@ import logo from "./assets/stc-rect-logo.png";
 function App() {
   const [recipeData, setRecipeData] = useState<Recipes>();
   const [recipeItemId, setRecipeItemId] = useState<Item["id"]>();
-  const [itemListClosed, setItemListClosed] = useState(false);
+  const [itemListClosed, setItemListClosed] = useState(true);
 
   const { data } = useDataContext();
 
