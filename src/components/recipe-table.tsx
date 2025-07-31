@@ -8,18 +8,25 @@ import { ResponsiveTable } from "./responsive-table";
 
 interface IRecipeTable {
   recipes?: Recipes;
-  selectedItemId?: Item["id"];
+  selectedItem?: Item;
   onRowClick: (event: MouseEvent<HTMLTableRowElement>, recipe: Recipe) => void;
 }
 
-export const RecipeTable = ({ recipes=[], selectedItemId="" }: IRecipeTable) => {
-  const [selectedItemIds, setSelectedItemIds] = useState<ItemIds>(new Array(recipes.length).fill(selectedItemId));
+export const RecipeTable = ({ recipes=[], selectedItem }: IRecipeTable) => {
+  const [selectedItemIds, setSelectedItemIds] = useState<ItemIds>([]);
 
-  useEffect(() => setSelectedItemIds(new Array(recipes.length).fill(selectedItemId)), [selectedItemId]);
+  useEffect(() => {
+    const itemIds: ItemIds = recipes.map(recipe => {
+      const idsIn = Object.keys(recipe.in);
+      if (selectedItem && idsIn.includes(selectedItem.id)) return selectedItem.id;
+      return idsIn[0];
+    });
+
+    setSelectedItemIds(itemIds);
+  }, [selectedItem?.id]);
+
   const { data } = useDataContext();
   const items = data ? data.items : [];
-
-  const selectedItem = items.find(item => item.id === selectedItemId);
 
   const onClickSelectItem = (id: string, index: number) =>  {
     setSelectedItemIds(prev => [
@@ -52,7 +59,6 @@ export const RecipeTable = ({ recipes=[], selectedItemId="" }: IRecipeTable) => 
               { id: "producers", name: "Producers" },
             ]}
             data={rowData}
-            caption={`${selectedItem?.name} Recipes`}
           />
 }
 

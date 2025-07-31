@@ -5,23 +5,29 @@ import { DataRetrival } from './components/data-retrival';
 import type { Item, Recipes } from './types';
 import { ItemTable } from './components/item-table';
 import { RecipeTable } from './components/recipe-table';
-import { recipeFilterFunction } from './modules/helper-functions';
 import { useDataContext } from './context/data-context';
 import logo from "./assets/stc-rect-logo.png";
+import { CollapsibleContainer } from './components/collapsible-container';
+import { recipesProducingFilter, recipesUsingFilter } from './modules/helper-functions';
+import { Container } from './components/container';
 
 function App() {
-  const [recipeData, setRecipeData] = useState<Recipes>();
+  const [recipesUsingData, setRecipesUsingData] = useState<Recipes>();
+  const [recipesProducingData, setRecipesProducingData] = useState<Recipes>();
   const [recipeItemId, setRecipeItemId] = useState<Item["id"]>();
-  const [itemListClosed, setItemListClosed] = useState(true);
 
   const { data } = useDataContext();
 
+  const selectedItem = data?.items.find(item => item.id === recipeItemId);
+
   const selectRecipe = (_: MouseEvent<HTMLTableRowElement>, item: Item) => {
-    const recipes = recipeFilterFunction(data?.recipes, item.id);
-    setRecipeData(recipes);
+    setRecipesUsingData(recipesUsingFilter(data?.recipes, item.id))
+    setRecipesProducingData(recipesProducingFilter(data?.recipes, item.id))
     setRecipeItemId(item.id);
-    setItemListClosed(true);
   }
+
+  const recipesUsingTitle = `Recipes using: ${selectedItem ? selectedItem.name : 'select an item'}`;
+  const recipesProducingTitle = `Recipes producing: ${selectedItem ? selectedItem.name : 'select an item'}`;
 
   return (
     <>
@@ -29,34 +35,31 @@ function App() {
       <div className='title'>Satisfactory Transit Calculator</div>
       {data ? <>
         <div className='version'>Satisfactory Data Version: {data?.version.Satisfactory}</div>
-        <div className='table-container'>
-          <div id='main-item-list' >
-              <div
-                onClick={()=>setItemListClosed(!itemListClosed)}
-                className={`main-item-list__cover-title${itemListClosed?' main-item-list__cover-title--closed':''}`}
-              >
-                Item List
-              </div>
-              <div className={`main-item-list${itemListClosed?' main-item-list--closed':''}`}>
-                <ItemTable items={data?.items} onRowClick={selectRecipe} />
-              </div>
-              <div
-                onClick={()=>setItemListClosed(!itemListClosed)}
-                className={`expand-down-button`}
-              >
-                {itemListClosed ? <>&darr;</> : <>&uarr;</>}
-              </div>
-          </div>
-          <div className='scroll-container'>
-            {recipeData
-              ? <RecipeTable
-                  recipes={recipeData}
-                  selectedItemId={recipeItemId}
-                  onRowClick={() => null}
-                />
-              : <h3>Select an item to see recipes that use it</h3>}
-          </div>
-        </div>
+        <Container>
+          <CollapsibleContainer title="Item List" mobile closeOnClick startClosed>
+              <ItemTable items={data?.items} onRowClick={selectRecipe} />
+          </CollapsibleContainer>
+          <Container vertical>
+            <CollapsibleContainer title={recipesUsingTitle} startClosed>
+              {recipesUsingData
+                ? <RecipeTable
+                    recipes={recipesUsingData}
+                    selectedItem={selectedItem}
+                    onRowClick={() => null}
+                  />
+                : <h3>Select an item to see recipes that use it</h3>}
+            </CollapsibleContainer>
+            <CollapsibleContainer title={recipesProducingTitle} startClosed>
+              {recipesProducingData
+                ? <RecipeTable
+                    recipes={recipesProducingData}
+                    selectedItem={selectedItem}
+                    onRowClick={() => null}
+                  />
+                : <h3>Select an item to see recipes that use it</h3>}
+            </CollapsibleContainer>
+          </Container>
+        </Container>
        </>: <></>}
         <div className='button-container'><DataRetrival/></div>
      </>

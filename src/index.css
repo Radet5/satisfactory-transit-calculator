@@ -96,6 +96,7 @@ footer {
   flex-grow: 0;
   font-size: 0.75em;
   font-weight: 600;
+  padding: 0.5rem;
 }
 
 @media (prefers-color-scheme: light) {

@@ -2,9 +2,14 @@ import type { Recipe, Recipes, Item, Items } from "../types";
 import { DecimalPrecision } from "./math"; 
 
 
-export const recipeFilterFunction = (recipes: Recipes|undefined, key: string) => {
+export const recipesUsingFilter = (recipes: Recipes|undefined, key: string) => {
   if (!recipes) return [];
   return recipes.filter(recipe => Object.keys(recipe.in).includes(key));
+}
+
+export const recipesProducingFilter = (recipes: Recipes|undefined, key: string) => {
+  if (!recipes) return [];
+  return recipes.filter(recipe => Object.keys(recipe.out).includes(key));
 }
 
 export const calcRatio = (recipe: Recipe, items: Items, curSelectedItemId: Item["id"]) => {
