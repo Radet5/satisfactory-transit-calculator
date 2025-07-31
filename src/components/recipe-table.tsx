@@ -12,7 +12,7 @@ interface IRecipeTable {
   onRowClick: (event: MouseEvent<HTMLTableRowElement>, recipe: Recipe) => void;
 }
 
-export const RecipeTable = ({ recipes=[], selectedItemId="", onRowClick }: IRecipeTable) => {
+export const RecipeTable = ({ recipes=[], selectedItemId="" }: IRecipeTable) => {
   const [selectedItemIds, setSelectedItemIds] = useState<ItemIds>(new Array(recipes.length).fill(selectedItemId));
 
   useEffect(() => setSelectedItemIds(new Array(recipes.length).fill(selectedItemId)), [selectedItemId]);
@@ -33,14 +33,6 @@ export const RecipeTable = ({ recipes=[], selectedItemId="", onRowClick }: IReci
       const curSelectedItemId = selectedItemIds[i];
       const ratio = calcRatio(recipe, items, curSelectedItemId);
 
-      // return <tr onClick={(e) => onRowClick(e, recipe)} key={recipe.id}>
-      //   <td>{recipe.name}</td>
-      //   <td><InOutTable items={recipe.in} time={recipe.time} selected={curSelectedItemId} onRowClick={(id) => onClickSelectItem(id, i)} /></td>
-      //   <td><InOutTable items={recipe.out} time={recipe.time} /></td>
-      //   <td style={{ whiteSpace: "nowrap"}}>1 : {ratio}</td>
-      //   <td><ListTable itemIds={recipe.producers} /></td>
-      // </tr>
-
       return {
         name: recipe.name,
         in: <InOutTable items={recipe.in} time={recipe.time} selected={curSelectedItemId} onRowClick={(id) => onClickSelectItem(id, i)} />,
@@ -60,23 +52,7 @@ export const RecipeTable = ({ recipes=[], selectedItemId="", onRowClick }: IReci
               { id: "producers", name: "Producers" },
             ]}
             data={rowData}
+            caption={`${selectedItem?.name} Recipes`}
           />
-  return (
-    <table>
-      <thead>
-        <tr className="table-title"><th colSpan={5}>{selectedItem?.name} Recipes</th></tr>
-        <tr>
-          <th>Name</th>
-          <th>In (per m)</th>
-          <th>Out (per m)</th>
-          <th>Stack Ratio</th>
-          <th>Producers</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tableBody}
-      </tbody>
-    </table>
-  );
 }
 

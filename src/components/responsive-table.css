@@ -46,7 +46,7 @@
 }
 
 .responsive-table caption {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   font-size: 1em;
   font-weight: bold;
   text-align: center;
@@ -117,10 +117,6 @@
   .responsive-table>tbody>tr>td {
     /* Undo display: block */
     display: table-cell;
-  }
-
-  .responsive-table caption {
-    font-size: 1.5em;
   }
 
   .responsive-table>tbody {

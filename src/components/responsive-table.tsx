@@ -8,16 +8,17 @@ type TableRowData = { [key: TableHeadingData["id"]]: ReactNode };
 interface IResponsiveTable {
   headings: Array<TableHeadingData>;
   data: Array<TableRowData>;
+  caption?: string;
 }
 
-export const ResponsiveTable = ({ headings, data }: IResponsiveTable) => {
+export const ResponsiveTable = ({ headings, data, caption }: IResponsiveTable) => {
 
   const ths = headings.map(heading => <TableHeading heading={heading.name} key={heading.id}/>);
   const rows = data.map(rowData => <TableRow rowData={rowData} headings={headings} />);
 
   return <div className="table-container">
   <table className="responsive-table">
-    <caption>Caption</caption>
+    {caption ? <caption>{caption}</caption> : <></>}
     <thead>
       <tr>
         {ths}
