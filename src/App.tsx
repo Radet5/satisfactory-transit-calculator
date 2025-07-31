@@ -12,12 +12,15 @@ import logo from "./assets/stc-rect-logo.png";
 function App() {
   const [recipeData, setRecipeData] = useState<Recipes>();
   const [recipeItemId, setRecipeItemId] = useState<Item["id"]>();
+  const [itemListClosed, setItemListClosed] = useState(false);
+
   const { data } = useDataContext();
 
   const selectRecipe = (_: MouseEvent<HTMLTableRowElement>, item: Item) => {
     const recipes = recipeFilterFunction(data?.recipes, item.id);
     setRecipeData(recipes);
     setRecipeItemId(item.id);
+    setItemListClosed(true);
   }
 
   return (
@@ -27,8 +30,22 @@ function App() {
       {data ? <>
         <div className='version'>Satisfactory Data Version: {data?.version.Satisfactory}</div>
         <div className='table-container'>
-          <div className='scroll-container'>
-            <ItemTable items={data?.items} onRowClick={selectRecipe} />
+          <div id='main-item-list' >
+              <div
+                onClick={()=>setItemListClosed(!itemListClosed)}
+                className={`main-item-list__cover-title${itemListClosed?' main-item-list__cover-title--closed':''}`}
+              >
+                Item List
+              </div>
+              <div className={`main-item-list${itemListClosed?' main-item-list--closed':''}`}>
+                <ItemTable items={data?.items} onRowClick={selectRecipe} />
+              </div>
+              <div
+                onClick={()=>setItemListClosed(!itemListClosed)}
+                className={`expand-down-button`}
+              >
+                {itemListClosed ? <>&darr;</> : <>&uarr;</>}
+              </div>
           </div>
           <div className='scroll-container'>
             {recipeData

@@ -108,6 +108,10 @@ footer {
     color: #747bff;
   }
 
+  table {
+    border: #5f668c 1px solid;
+  }
+
   tbody tr:nth-child(odd) {
     background: #949494;
   }
